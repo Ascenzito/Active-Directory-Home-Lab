@@ -31,7 +31,6 @@ The Active Directory Home Lab project aimed to simulate a small enterprise netwo
 
 Downloaded Oracle VirtualBox and the VirtualBox Extension Pack from the official site. Also downloaded the Windows Server 2019 evaluation ISO from Microsoft and a Windows 10 ISO for the client VM.
 
-*Ref 1: VirtualBox installation with Extension Pack installed*
 
 ---
 
@@ -43,7 +42,6 @@ Created a new VM in VirtualBox named `DC` (Domain Controller). Configured it wit
 
 Mounted the Windows Server 2019 ISO and completed the OS installation.
 
-*Ref 2: VirtualBox VM settings showing dual NIC configuration*
 
 ---
 
@@ -55,7 +53,6 @@ After booting into Windows Server 2019, identified the two network adapters and 
 - **Subnet Mask:** 255.255.255.0
 - **DNS:** 127.0.0.1 (loopback — the DC will serve as its own DNS once AD DS is installed)
 
-*Ref 3: Static IP configuration on the internal network adapter*
 
 ---
 
@@ -63,7 +60,6 @@ After booting into Windows Server 2019, identified the two network adapters and 
 
 Opened Server Manager and added the **Active Directory Domain Services** role. After installation, promoted the server to a Domain Controller by creating a new forest with the domain name `mydomain.com`. The server rebooted and the domain was live.
 
-*Ref 4: AD DS role installation and domain promotion wizard*
 
 ---
 
@@ -71,7 +67,6 @@ Opened Server Manager and added the **Active Directory Domain Services** role. A
 
 Rather than using the built-in Administrator account day-to-day, created a new Organisational Unit (OU) called `_ADMINS` in Active Directory Users and Computers, then created a personal admin user account (e.g. `a-pascenzo`) and added it to the **Domain Admins** group.
 
-*Ref 5: New admin OU and user account created in ADUC*
 
 ---
 
@@ -79,7 +74,6 @@ Rather than using the built-in Administrator account day-to-day, created a new O
 
 Installed the **Remote Access** role with the **Routing** sub-feature to allow the internal network clients to reach the internet through the Domain Controller. Configured NAT on the external (internet-facing) NIC so that traffic from the internal network is translated and routed outbound.
 
-*Ref 6: RAS/NAT configured with the internet-facing adapter selected*
 
 ---
 
@@ -95,7 +89,6 @@ Installed the **DHCP Server** role on the Domain Controller. Created a new scope
 
 Authorised the DHCP server in Active Directory and activated the scope.
 
-*Ref 7: DHCP scope configured and activated in DHCP Manager*
 
 ---
 
@@ -127,8 +120,6 @@ foreach ($n in $USER_FIRST_LAST_LIST) {
 }
 ```
 
-*Ref 8: PowerShell script running — users being created in real time*
-
 ---
 
 ### Step 9 – Create and Join the Windows 10 Client VM
@@ -140,7 +131,6 @@ Created a second VM in VirtualBox named `CLIENT1` with a single network adapter 
 3. Joined the machine to `mydomain.com` via System Properties.
 4. Rebooted and logged in using one of the bulk-created domain user accounts.
 
-*Ref 9: CLIENT1 joined to mydomain.com and domain user login successful*
 
 ---
 
@@ -152,4 +142,3 @@ Confirmed the full lab was functioning correctly:
 - Domain users could log into `CLIENT1` with their AD credentials.
 - Internet access worked through the NAT configured on the DC.
 
-*Ref 10: ipconfig output on CLIENT1 showing DHCP-assigned address and default gateway*
